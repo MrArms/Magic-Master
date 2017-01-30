@@ -1,0 +1,67 @@
+
+Then add the timePoints and animation for actor becoming ready to move 
+
+The game loop
+	Do we want each actor to move once per "turn" with just the fastest going first....or something else? Maybe FF7 style timings
+	
+Make the ActorView derive from the button and have callbacks for selection
+	Maybe you can't click them until the game is paused (either you click pause or it pauses naturally when an actor is ready)
+		Add move buttons on the right and some info when an actor is selected 
+			Attack
+	
+	
+
+	
+Create interactionLayerManager and add to GameView
+	Think about how inputs are entered, have a separate input class perhaps?
+		Sends to the battle part of the screen or the side bar etc.
+
+Create displayObject class and derive other things from it where necessary
+	addToParent
+	destroy
+	setVisible
+	getWidth
+	getHeight
+	setPosition	
+
+Create GameAnimation class DONE
+Create Action class 
+	Holds information about the action
+	
+Process action for melee attack
+	update actors
+	add gameAnimations
+	add counter-attack to test ActionController
+	
+Creating main gameLoop with toggle for play/pause
+	
+	
+	
+Resolve simple attack in ActionController and pass GameAnimations to the GameController 
+Make GameView hold the ActorViews for each actor when created in GameController (store a copy of the grid that is in the GameController)
+Pass this on from the GameController to the GameView
+Create GameView taking animations and passing them to the relevant ActorView to be animated (simple different colour rectangle with timer and callback)	
+	GameView needs a list of all animations to process and only callback when all of them are completed
+		Callback to the GameController which then calls the ActionController to say all the animations are completed
+				
+GameController
+	Need main game loop whereby all units are cycled through and the next one to move gets selected
+	Have pause and play button at the side to stop/start this process
+	When a unit is ready to move then the timer stops and a new animation for selection is created that gets sent to the GameView and waits for callback
+		When this is completed then we check which player is ready to move
+			For now just allow both to be controlled with the mouse, but later on we will have the option of AI or human
+	
+		Think about how inputs are going to work, maybe an input controller? Maybe something else....
+		Also think about menus....
+		
+		
+Want animation for unit ready to move
+
+
+================= DONE ===================
+		
+Added some details to the ActorView		
+		
+Add play/pause button DONE		
+		
+Create button class DONE

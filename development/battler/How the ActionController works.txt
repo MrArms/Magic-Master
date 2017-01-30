@@ -1,0 +1,36 @@
+
+An Action is an action that takes place that needs an animation and needs resolving
+	eg. A unit attacks 4 cells with a spell
+	A unit starts a status effect eg. Action.POISON_STATUS_START
+	
+GameEvent - this is something that happens to an actor - move, take damage, die, attack
+
+
+
+So a spell attacks four cells with a poison spell
+	This is added as an action to the ActionController
+		The Action controller gets gameEvents for the attack -> this is 4 attack gameEvents
+				An array of gameEvents with these four things is created
+			These are resolved on the actors (reduced HP) and say one dies and four animEvents are created
+					3 poison damage and 1 poison damage and death
+				These are sent back and we wait for a callback to tell us that the anims have been completed 
+				
+				
+Wizard casts poison spell at four cells
+	plays wizard casting animation
+		Wait for animation callback
+	Four enemies get hit by the spell - it is resolved on the code side and a new action is created of a counter-attack from one of the enemies
+		Also the following animations are created below:
+		1) Quick particle anim and then the damage appears 
+		2) Quick particle anim and then damage and at the same time green status effect appears
+		3) Quick particle anim and then the damage appears and at the same time the enemy dies
+		4) Quick particle anim and then the damage appears
+		
+		The actors are resolved first before we can see the animation
+			The animator sorts out the order of everything
+		
+		Then the actionController waits for the animations to finish above
+		
+		Then it deals with the new Action of the counter attack
+		
+	
