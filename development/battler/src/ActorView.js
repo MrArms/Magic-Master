@@ -23,6 +23,7 @@ ActorView.prototype.constructor = ActorView;
 
 ActorView.WIDTH = 110;
 ActorView.HEIGHT = 60;
+ActorView.HIGHLIGHT_THICKNESS = 5;
 
 ActorView.STAT_TEXT_START_X = 5;
 ActorView.STAT_TEXT_START_Y = 5;
@@ -47,6 +48,14 @@ ActorView.prototype._init = function(){
 
 	DisplayObject.prototype._init.call();
 
+	this._readyToMoveRectangle = new PIXI.Graphics();
+	this._readyToMoveRectangle.lineStyle(0, 0x00FF00);	
+	this._readyToMoveRectangle.beginFill(0xFFFFFF); 
+	this._readyToMoveRectangle.drawRect(-ActorView.HIGHLIGHT_THICKNESS, -ActorView.HIGHLIGHT_THICKNESS, ActorView.WIDTH + ActorView.HIGHLIGHT_THICKNESS*2, ActorView.HEIGHT + ActorView.HIGHLIGHT_THICKNESS*2);
+	this._readyToMoveRectangle.visible = false;
+		
+	this.addChild(this._readyToMoveRectangle);	
+	
 	this._backgroundRectangle = new PIXI.Graphics();
 	this._backgroundRectangle.lineStyle(1, 0x00FF00);	
 	this._backgroundRectangle.beginFill(0xFFFF00); 
@@ -85,6 +94,9 @@ ActorView.prototype._updateStatDisplay = function(){
 
 ActorView.prototype.destroy = function(){
 	
+	this.removeChild(this._readyToMoveRectangle);
+	this._readyToMoveRectangle = null;
+	
 	this.removeChild(this._backgroundRectangle);
 	this._backgroundRectangle = null;
 	
@@ -100,22 +112,18 @@ ActorView.prototype.destroy = function(){
 	DisplayObject.prototype.destroy.call(this);
 };
 
-ActorView.prototype.setPosition = function(_xPos, yPos){
-
-};
-
-/*ActorView.prototype.addToContainer = function(_parentContainer){
+ActorView.prototype.setToMove = function(_readyToMove, _callback){
 	
-	this._parentContainer = _parentContainer;
-	this._parentContainer.addChild(this);
+	this._readyToMoveRectangle.visible = _readyToMove;
+	
+	// ******* Will have an animation here eventually, just have a delay in here for now for functionality ********
+	if(_readyToMove === true)		
+		TweenMax.delay(1.0, _callback);
 };
 
-ActorView.prototype.removeFromParent = function(){
-
-	if(this._parentContainer){
-		this._parentContainer.removeChild(this)
-	}
-};*/
+ActorView.prototype.setPosition = function(_xPos, yPos){
+	
+};
 
 ActorView.prototype.render = function(){
 

@@ -6,3 +6,5 @@ GameGlobals.NUMBER_ROWS = 3;
 
 GameGlobals.PLAYER1 = 0;
 GameGlobals.PLAYER2 = 1;
+
+GameGlobals.TIME_POINT_THRESHOLD = 100;

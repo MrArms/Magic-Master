@@ -14,7 +14,7 @@ Utils.GetRandomString = function(_length){
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     for( var i=0; i < _length; i++ )
-        text += possible.charAt(Math.floor(ROT.RNG.getUniform() * possible.length));
+        text += Utils.getRandomMemberOfArray(possible);
 
     return text;
 };
@@ -30,6 +30,12 @@ Utils.clamp = function(_value, _min, _max){
 Utils.inBounds = function(_value, _min, _max){
 
 	return (_value >= _min && _value <= _max);
+};
+
+Utils.getRandomMemberOfArray = function(_array){
+	
+	return _array[Math.floor(Math.random()*_array.length)];
+
 };
 
 Utils.doesVariableExist = function(_variable){

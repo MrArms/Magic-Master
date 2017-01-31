@@ -98,6 +98,24 @@ GameView.prototype._addActorViewsOnGrid = function(){
 	}*/
 };
 
+GameView.prototype._showActorToMove = function(_actors, _actorToMove, _callback){
+
+	for(var i=0; i<_actors.length; i++){
+		if(_actors[i].getId() !== _actorToMove.getId()){
+		
+			var tempActorView = _actors[i].getActorView();
+			
+			tempActorView.setToMove(false)
+		}
+	}
+	
+	// Animate actor to move here
+	var actorView = _actorToMove.getActorView();
+	
+	// Set actor to move and send callback for when it is completed
+	tempActorView.setToMove(true, _callback);
+};
+
 //===================================================
 // Public Methods
 //===================================================

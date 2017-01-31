@@ -6,7 +6,7 @@
 Actor = function(_type){
 	
 	this._type = _type;
-	//this._id = Utils.GetRandomString(Actor.ID_LENGTH);
+	this._id = Utils.GetRandomString(Actor.ID_LENGTH);
 	
 	this._init();
 };
@@ -15,12 +15,14 @@ Actor = function(_type){
 // Variables
 //===================================================
 
-//Actor.ID_LENGTH = 10;
+Actor.ID_LENGTH = 10;
+Actor.prototype._id = null;
 Actor.prototype._type = null;
 Actor.prototype._name = null;
 Actor.prototype._timePoints = null;
 Actor.prototype._healthPoints = null;
 Actor.prototype._maxHealthPoints = null;
+Actor.prototype._speed = null;
 
 // This gets set to true when it needs to be re-rendered as it has been changed
 Actor.prototype._changed = null;
@@ -53,6 +55,7 @@ Actor.prototype._init = function(){
 	this._name = schema.name;
 	this._healthPoints = schema.healthPoints;	
 	this._maxHealthPoints = schema.healthPoints;	
+	this._speed = schema.speed;	
 	
 	this._position = {};
 
@@ -74,6 +77,11 @@ Actor.prototype._getActorSchema = function(){
 // Public Methods
 //===================================================
 
+Actor.prototype.advanceTimePoints = function(){
+
+	this._timePoints += this._speed;
+};
+
 /*Actor.prototype.addActorView = function(_parentContainer){
 
 	this._actorView = new ActorView();	
@@ -92,7 +100,7 @@ Actor.prototype._getActorSchema = function(){
 // GETTERS & SETTERS
 //===================================================
 
-//Actor.prototype.getID = function(){ return this._id; }
+Actor.prototype.getId = function(){ return this._id; }
 Actor.prototype.getName = function(){ return this._name; };
 
 Actor.prototype.getHealthPoints = function(){ return this._healthPoints; };

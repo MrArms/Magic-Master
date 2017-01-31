@@ -51,13 +51,80 @@ GameController.prototype._init = function(){
 	this._gameView.setPlayButtonCallback(this._playButtonClicked.bind(this))
 						
 	this._gameInitialised = true;
+		
+	this._startGameLoop();
+};
+
+GameController.prototype._startGameLoop = function(){
+
+	this._actorToMove = this._getNextActorToMove();
 	
-	this._getNextActorToMove();
+	if(this._actorToMove !== null){
+		// We need to highlight the actor here to be moved with the animator and make sure no others are selected
+		this._gameView._showActorToMove(this._grid.getActors(), this._actorToMove, this._actorMoveAnimationCompleted.bind(this));
+	}
+	else{
+		Utils.log("ERROR cannot find actor to move!!!");
+	}
+};
+
+GameController.prototype._actorMoveAnimationCompleted = function(){
+
+	Utils.log("_actorMoveAnimationCompleted()");
 };
 
 GameController.prototype._getNextActorToMove = function(){
 	
+	// Iterate through all the actors and get the one with most timepoints
+	// If there are two with the same timepoints then pick one at random
 	
+	var actorReadyToMove = false;
+	
+	// ***** INSTEAD OF A WHILE LOOP THIS WILL EVENTUALLY TO ONE LOOP AND THEN CALLBACK TO ALLOW THE ANIMATION OF TIMEPOINTS BAR TO INCREASE (if we are going to do that) ******
+	while(actorReadyToMove === false){
+		
+		var actors = this._grid.getActors();
+		
+		var highestTimePointsFound = 0;
+		var actorsWithHighestTimepoints = [];
+				
+		// Go through the actors and get the ones above the threshold with the highest timepoints
+		for(var i=0; i<actors.length; i++){
+			
+			var tempActorTimePoints = actors[i].getTimePoints()
+			
+			if(tempActorTimePoints >= GameGlobals.TIME_POINT_THRESHOLD){
+			
+				actorReadyToMove = true;
+			
+				if(tempActorTimePoints > highestTimePointsFound){
+					highestTimePointsFound = tempActorTimePoints;
+					actorsWithHighestTimepoints = [actors[i]];				
+				}
+				else if(tempActorTimePoints === highestTimePointsFound){					
+					actorsWithHighestTimepoints.push(actors[i]);
+				}					
+			}
+		}	
+		
+		// Return actors ready to move
+		if(actorReadyToMove){
+			if(actorsWithHighestTimepoints.length === 1)
+				return actorsWithHighestTimepoints[0];
+			else{
+				// Need to pick a member of the array at random
+				return Utils.getRandomMemberOfArray(actorsWithHighestTimepoints);
+			}
+		}
+		// If no actor is found that is ready to move then iterate through the actors and increase their timepoints
+		else{
+			for(var i=0; i<actors.length; i++)
+				actors[i].advanceTimePoints();																			
+				
+			// ********** WILL POSSIBLY HAVE CALLBACK HERE WITH ANIMATION FOR INCREASING TIMEPOINTS *******					
+		}
+						
+	}	
 };
 
 GameController.prototype._playButtonClicked = function(){
