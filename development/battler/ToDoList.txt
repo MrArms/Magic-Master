@@ -1,7 +1,15 @@
 
+Create a side panel that shows stats for the currently selected actor
+	Click on actors to show information for that actor
+	Need a "ready to move" indicator if it is the next one to move
+
+
+
 ActorView needs to inherit from your displayObject
 
-Sort out pause/play button
+
+
+
 
 Have a separate gridView rather than added to the gameView
 	
@@ -11,7 +19,7 @@ Fix the bug with the wrong actor to move being highlighted DONE
 
 Then add the timePoints and animation for actor becoming ready to move DONE
 
-
+Sort out pause/play button DONE
 
 
 
