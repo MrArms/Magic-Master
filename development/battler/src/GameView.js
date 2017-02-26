@@ -9,10 +9,7 @@ GameView = function(_grid){
 	
 	this._grid = _grid;	
 
-	this._init();
-	
-	// Add the initial actor views to the gameView
-	this._addActorViewsOnGrid();
+	this._init();		
 }
 
 GameView.prototype = Object.create( PIXI.Container.prototype );
@@ -23,10 +20,10 @@ GameView.prototype.constructor = GameView;
 //===================================================
 
 GameView.PLAYER1_UNIT_START_X = 80;
-GameView.PLAYER1_UNIT_START_Y = 300;
+GameView.PLAYER1_UNIT_START_Y = 320;
 
 GameView.PLAYER2_UNIT_START_X = 80;
-GameView.PLAYER2_UNIT_START_Y = 50;
+GameView.PLAYER2_UNIT_START_Y = 60;
 
 GameView.UNIT_X_GAP = 15;
 GameView.UNIT_Y_GAP = 15;
@@ -50,6 +47,22 @@ GameView.prototype._init = function(){
 	this._playButton = new ButtonText(90, 45, "Play");
 	this._playButton.setPosition(670, 100);
 	this.addChild(this._playButton);
+	
+	this._player1Text = new PIXI.Text("Player 1", {align:"center"});
+	this._player1Text.x = GameGlobals.SCREEN_WIDTH * 0.5 - 120;
+	this._player1Text.y = GameView.PLAYER1_UNIT_START_Y + GameGlobals.NUMBER_ROWS * (GameView.UNIT_Y_GAP +  ActorView.HEIGHT) + 10;	
+		
+	this._player2Text = new PIXI.Text("Player 2", {align:"center"});
+	this._player2Text.x = GameGlobals.SCREEN_WIDTH * 0.5 - 120;
+	this._player2Text.y = GameView.PLAYER2_UNIT_START_Y - 45;	
+		
+	this.setPlayerTurnIndicator(GameGlobals.NO_PLAYER);
+	
+	this.addChild(this._player1Text);
+	this.addChild(this._player2Text);
+					
+	// Add the initial actor views to the gameView
+	this._addActorViewsOnGrid();
 };
 
 // Position the ActorViews in the GameView
@@ -79,29 +92,6 @@ GameView.prototype._addActorViewsOnGrid = function(){
 		
 		this.addChild(tempActorView);
 	}	
-			
-	/*for(var player=0; player<=1; player++){
-			
-		var unitStartX = player === 0 ? GameView.PLAYER1_UNIT_START_X : GameView.PLAYER2_UNIT_START_X;
-		var unitStartY = player === 0 ? GameView.PLAYER1_UNIT_START_Y : GameView.PLAYER2_UNIT_START_Y;
-			
-		for(var i=0; i<GameGlobals.NUMBER_ROWS; i++){
-
-			for(var j=0; j<GameGlobals.NUMBER_COLS; j++){
-			
-				var tempActor = this._grid[player][i][j];
-				
-				// If there is an actor then create the associated ActorView
-				if(tempActor !== null){
-															
-					var tempActorView = tempActor.getActorView();
-					tempActorView.x = unitStartX + j*GameView.UNIT_X_GAP;
-					tempActorView.y = unitStartY + i*GameView.UNIT_Y_GAP;					
-					this.addChild(tempActorView);					
-				}
-			}
-		}
-	}*/
 };
 
 GameView.prototype._showActorToMove = function(_actors, _actorToMove, _callback){
@@ -123,16 +113,27 @@ GameView.prototype._showActorToMove = function(_actors, _actorToMove, _callback)
 	actorView.setToMove(true, _callback);
 };
 
+
+
+
 //===================================================
 // Public Methods
 //===================================================
 
+GameView.prototype.setPlayerTurnIndicator = function(_playerTurn){
 
-// ----------- These functions "pass through" from GameController to the playButton -----------
-
-GameView.prototype.setPlayButtonCallback = function(_playButtonCallback){
-	
-	this._playButton.setCallback(_playButtonCallback);
+	if(_playerTurn === GameGlobals.NO_PLAYER){
+		this._player1Text.style  = {fill: 0x000000};
+		this._player2Text.style  = {fill: 0x000000};
+	}
+	else if(_playerTurn === GameGlobals.PLAYER1){
+		this._player1Text.style  = {fill: 0xFFFFFF};
+		this._player2Text.style  = {fill: 0x000000};
+	}
+	else if(_playerTurn === GameGlobals.PLAYER2){
+		this._player1Text.style  = {fill: 0x000000};
+		this._player2Text.style  = {fill: 0xFFFFFF};
+	}
 };
 
 GameView.prototype.updatePauseButton = function(_paused){
@@ -141,6 +142,14 @@ GameView.prototype.updatePauseButton = function(_paused){
 		this._playButton.setButtonText("Play");
 	else
 		this._playButton.setButtonText("Pause");
+};
+
+
+// ----------- These functions "pass through" from GameController to the playButton -----------
+
+GameView.prototype.setPlayButtonCallback = function(_playButtonCallback){
+	
+	this._playButton.setCallback(_playButtonCallback);
 };
 
 // --------------------------------------------------------------------------------------------

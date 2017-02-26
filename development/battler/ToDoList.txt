@@ -1,11 +1,17 @@
 
-Fix the bug with the wrong actor to move being highlighted 
-
-Then add the timePoints and animation for actor becoming ready to move 
-
-
-
 ActorView needs to inherit from your displayObject
+
+Sort out pause/play button
+
+Have a separate gridView rather than added to the gameView
+	
+Also have a gameUIView	
+
+Fix the bug with the wrong actor to move being highlighted DONE
+
+Then add the timePoints and animation for actor becoming ready to move DONE
+
+
 
 
 

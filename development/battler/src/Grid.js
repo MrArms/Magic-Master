@@ -83,6 +83,7 @@ Grid.prototype.initialiseGridActors = function(_startingGrid){
 					
 					newActor.setGrid(this);
 					newActor.setPlayer(player);
+					newActor.addActorView();
 					newActor.setPosition(i,j);
 					
 					this._gridData[player][i][j] = newActor; 

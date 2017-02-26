@@ -31,8 +31,12 @@ Main.prototype._init = function() {
 
 Main.prototype._setUpPixiRenderer = function(){
 						
-	var myView = document.getElementById('game-canvas');
-	this.renderer = new PIXI.autoDetectRenderer(myView.width, myView.height, {view:myView});		
+	var gameCanvas = document.getElementById('game-canvas');
+	
+	GameGlobals.SCREEN_WIDTH = gameCanvas.width;
+	GameGlobals.SCREEN_HEIGHT = gameCanvas.height;
+	
+	this.renderer = new PIXI.autoDetectRenderer(GameGlobals.SCREEN_WIDTH, GameGlobals.SCREEN_HEIGHT, {view:gameCanvas});		
 	this.renderer.backgroundColor = 0xff0000;
 
 	// The renderer will create a canvas element for you that you can then insert into the DOM.

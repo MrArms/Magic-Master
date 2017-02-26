@@ -56,9 +56,11 @@ ActorView.prototype._init = function(){
 		
 	this.addChild(this._readyToMoveRectangle);	
 	
+	var backgroundColour = this._actorParent.getPlayer() === GameGlobals.PLAYER1 ? 0xFFFF00 : 0x02FFDD;
+	
 	this._backgroundRectangle = new PIXI.Graphics();
 	this._backgroundRectangle.lineStyle(1, 0x00FF00);	
-	this._backgroundRectangle.beginFill(0xFFFF00); 
+	this._backgroundRectangle.beginFill(backgroundColour); 
 	this._backgroundRectangle.drawRect(0, 0, ActorView.WIDTH, ActorView.HEIGHT);
 					
 	this.addChild(this._backgroundRectangle);	
