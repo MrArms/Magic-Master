@@ -29,6 +29,8 @@ Actor.prototype._changed = null;
 
 Actor.prototype._grid = null;
 
+Actor.prototype._readyToMove = null;
+
 // This stores if there is currently a gameEvent happening and if so then it may need to be re-rendered
 // Actor.prototype._gameEventHappening = null;
 
@@ -48,6 +50,7 @@ Actor.prototype._init = function(){
 	
 	var schema = this._getActorSchema();
 	
+	this._readyToMove = false;
 	this._timePoints = 0;
 	
 	this._changed = true;	
@@ -77,9 +80,17 @@ Actor.prototype._getActorSchema = function(){
 // Public Methods
 //===================================================
 
+Actor.prototype.setActorReadyToMove = function(){
+
+	this._readyToMove = true;
+};
+
 Actor.prototype.advanceTimePoints = function(){
 
 	this._timePoints += this._speed;
+	
+	// Update the new time points on the actor view
+	this._actorView.updateView();
 };
 
 /*Actor.prototype.addActorView = function(_parentContainer){

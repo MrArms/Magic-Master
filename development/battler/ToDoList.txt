@@ -3,6 +3,12 @@ Fix the bug with the wrong actor to move being highlighted
 
 Then add the timePoints and animation for actor becoming ready to move 
 
+
+
+ActorView needs to inherit from your displayObject
+
+
+
 The game loop
 	Do we want each actor to move once per "turn" with just the fastest going first....or something else? Maybe FF7 style timings
 	

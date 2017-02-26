@@ -77,9 +77,15 @@ ActorView.prototype._init = function(){
 		
 	this._updateStatDisplay();
 	
+	/*this._positionDebugText = new PIXI.Text("", {align:"left", fontSize:10});
+	this._positionDebugText.x = ActorView.STAT_TEXT_START_X;
+	this._positionDebugText.y = ActorView.STAT_TEXT_START_Y + ActorView.STAT_TEXT_START_Y_GAP*3;*/
+	
+	
 	this.addChild(this._nameText);
 	this.addChild(this._healthPointText);
 	this.addChild(this._timePointText);	
+	//this.addChild(this._positionDebugText);	
 };
 
 ActorView.prototype._updateStatDisplay = function(){
@@ -91,6 +97,11 @@ ActorView.prototype._updateStatDisplay = function(){
 //===================================================
 // Public Methods
 //===================================================
+
+ActorView.prototype.updateView = function(){
+
+	this._updateStatDisplay();
+};
 
 ActorView.prototype.destroy = function(){
 	
@@ -114,15 +125,26 @@ ActorView.prototype.destroy = function(){
 
 ActorView.prototype.setToMove = function(_readyToMove, _callback){
 	
-	this._readyToMoveRectangle.visible = _readyToMove;
+	this._readyToMoveRectangle.visible = false;
 	
-	// ******* Will have an animation here eventually, just have a delay in here for now for functionality ********
-	if(_readyToMove === true)		
-		TweenMax.delay(1.0, _callback);
+	if(_readyToMove === true && Utils.doesVariableExist(_callback)){
+		this.playReadyToMoveAnimation(_callback)
+	}			
 };
 
-ActorView.prototype.setPosition = function(_xPos, yPos){
+ActorView.prototype.playReadyToMoveAnimation = function(_callback){
+
+	this._readyToMoveRectangle.alpha = 0.0;
+	this._readyToMoveRectangle.visible = true;
+
+	TweenMax.to(this._readyToMoveRectangle, 0.6, {alpha:1.0, onComplete:_callback});
+};
+
+ActorView.prototype.setPosition = function(_xPos, _yPos){
+	this.x = _xPos;
+	this.y = _yPos;
 	
+	//this._positionDebugText.text = "x = " + _xPos + " y = " + _yPos;		
 };
 
 ActorView.prototype.render = function(){

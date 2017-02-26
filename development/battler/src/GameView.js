@@ -61,16 +61,22 @@ GameView.prototype._addActorViewsOnGrid = function(){
 	for(var i=0; i<player1Actors.length; i++){
 	
 		var tempActorView = player1Actors[i].getActorView();
-		tempActorView.x = GameView.PLAYER1_UNIT_START_X + player1Actors[i].getPosition().col * (GameView.UNIT_X_GAP + player1Actors[i].getActorView().getWidth());
-		tempActorView.y = GameView.PLAYER1_UNIT_START_Y + player1Actors[i].getPosition().row * (GameView.UNIT_Y_GAP + player1Actors[i].getActorView().getHeight());					
+		var xPos = GameView.PLAYER1_UNIT_START_X + player1Actors[i].getPosition().col * (GameView.UNIT_X_GAP + player1Actors[i].getActorView().getWidth());
+		var yPos = GameView.PLAYER1_UNIT_START_Y + player1Actors[i].getPosition().row * (GameView.UNIT_Y_GAP + player1Actors[i].getActorView().getHeight());
+
+		tempActorView.setPosition(xPos, yPos);
+		
 		this.addChild(tempActorView);
 	}	
 	
 	for(i=0; i<player2Actors.length; i++){
 	
 		var tempActorView = player2Actors[i].getActorView();
-		tempActorView.x = GameView.PLAYER2_UNIT_START_X + player2Actors[i].getPosition().col * (GameView.UNIT_X_GAP + player2Actors[i].getActorView().getWidth());
-		tempActorView.y = GameView.PLAYER2_UNIT_START_Y + (GameGlobals.NUMBER_ROWS - 1 - player2Actors[i].getPosition().row) * (GameView.UNIT_Y_GAP + player2Actors[i].getActorView().getHeight());					
+		var xPos = GameView.PLAYER2_UNIT_START_X + player2Actors[i].getPosition().col * (GameView.UNIT_X_GAP + player2Actors[i].getActorView().getWidth());
+		var yPos = GameView.PLAYER2_UNIT_START_Y + (GameGlobals.NUMBER_ROWS - 1 - player2Actors[i].getPosition().row) * (GameView.UNIT_Y_GAP + player2Actors[i].getActorView().getHeight());					
+		
+		tempActorView.setPosition(xPos, yPos);
+		
 		this.addChild(tempActorView);
 	}	
 			
@@ -105,7 +111,8 @@ GameView.prototype._showActorToMove = function(_actors, _actorToMove, _callback)
 		
 			var tempActorView = _actors[i].getActorView();
 			
-			tempActorView.setToMove(false)
+			tempActorView.setToMove(false);
+			tempActorView.updateView();
 		}
 	}
 	
@@ -113,7 +120,7 @@ GameView.prototype._showActorToMove = function(_actors, _actorToMove, _callback)
 	var actorView = _actorToMove.getActorView();
 	
 	// Set actor to move and send callback for when it is completed
-	tempActorView.setToMove(true, _callback);
+	actorView.setToMove(true, _callback);
 };
 
 //===================================================
