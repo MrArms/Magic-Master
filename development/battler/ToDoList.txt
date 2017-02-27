@@ -4,17 +4,11 @@ Need currently selected actor (if any)
 Also current actor to move
 
 
-
-
 Create a side panel that shows stats for the currently selected actor
 	Click on actors to show information for that actor
 	Need a "ready to move" indicator if it is the next one to move
 
-
-
-	
-	
-	
+Make battle area a separate displayObject
 
 ActorView needs to inherit from your displayObject
 

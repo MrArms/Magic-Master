@@ -19,6 +19,7 @@ GameView.prototype.constructor = GameView;
 // Constants
 //===================================================
 
+// Battle area stuff
 GameView.PLAYER1_UNIT_START_X = 80;
 GameView.PLAYER1_UNIT_START_Y = 320;
 
@@ -27,6 +28,11 @@ GameView.PLAYER2_UNIT_START_Y = 60;
 
 GameView.UNIT_X_GAP = 15;
 GameView.UNIT_Y_GAP = 15;
+
+///////
+
+GameView.ACTOR_INFO_VIEW_START_X = 600;
+GameView.ACTOR_INFO_VIEW_START_Y = 200;
 
 //===================================================
 // Variables
@@ -38,6 +44,8 @@ GameView.prototype._grid = null;
 GameView.prototype._playButton = null;
 
 GameView.prototype._actorSelected = null;
+
+GameView.prototype._actorInfoView = null;
 //GameView.prototype._playButtonCallback = null;
 
 //===================================================
@@ -65,6 +73,11 @@ GameView.prototype._init = function(){
 					
 	// Add the initial actor views to the gameView
 	this._addActorViewsOnGrid();
+	
+	this._actorInfoView = new ActorInfoView();
+	this._actorInfoView.x = GameView.ACTOR_INFO_VIEW_START_X;
+	this._actorInfoView.y = GameView.ACTOR_INFO_VIEW_START_Y;
+	this.addChild(this._actorInfoView);
 };
 
 // Position the ActorViews in the GameView

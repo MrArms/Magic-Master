@@ -33,6 +33,7 @@ Button.prototype._buttonWidth = null;
 Button.prototype._buttonHeight = null;
 
 Button.prototype._callbackFunction = null;
+Button.prototype._calbackParametersArray = null;
 
 //===================================================
 // Private Methods
@@ -79,6 +80,11 @@ Button.prototype._init = function(){
 // Public Methods
 //===================================================
 
+Button.prototype.setCallbackParameterArray = function(_calbackParametersArray){
+
+	this._calbackParametersArray = _calbackParametersArray;
+};
+
 Button.prototype.setCallback = function(_callbackFunction){
 
 	this._callbackFunction = _callbackFunction;
@@ -112,7 +118,10 @@ Button.prototype.mouseUp = function(e){
 	
 		if(this._callbackFunction !== null){
 								
-			this._callbackFunction();
+			if(this._calbackParametersArray !== null)					
+				this._callbackFunction.apply(this, this._calbackParametersArray);		
+			else 					
+				this._callbackFunction();
 		}
 	}
 			
