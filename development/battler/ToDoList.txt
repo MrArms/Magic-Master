@@ -1,9 +1,20 @@
 
+Need currently selected actor (if any)
+	Make actorView a button that inherit from the Button class
+Also current actor to move
+
+
+
+
 Create a side panel that shows stats for the currently selected actor
 	Click on actors to show information for that actor
 	Need a "ready to move" indicator if it is the next one to move
 
 
+
+	
+	
+	
 
 ActorView needs to inherit from your displayObject
 

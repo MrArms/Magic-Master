@@ -3,48 +3,33 @@
 // Constructor
 //===================================================
 
-GameView = function(_grid){
+SidePanelView = function(_grid){
 
 	PIXI.Container.call(this);
 	
-	this._grid = _grid;	
-
 	this._init();		
 }
 
-GameView.prototype = Object.create( PIXI.Container.prototype );
-GameView.prototype.constructor = GameView;
+SidePanelView.prototype = Object.create( PIXI.Container.prototype );
+SidePanelView.prototype.constructor = SidePanelView;
 
 //===================================================
 // Constants
 //===================================================
 
-GameView.PLAYER1_UNIT_START_X = 80;
-GameView.PLAYER1_UNIT_START_Y = 320;
-
-GameView.PLAYER2_UNIT_START_X = 80;
-GameView.PLAYER2_UNIT_START_Y = 60;
-
-GameView.UNIT_X_GAP = 15;
-GameView.UNIT_Y_GAP = 15;
+// SidePanelView.PLAYER1_UNIT_START_X = 80;
 
 //===================================================
 // Variables
 //===================================================
 
-GameView.prototype._backgroundRectangle = null;
-
-GameView.prototype._grid = null;
-GameView.prototype._playButton = null;
-
-GameView.prototype._actorSelected = null;
-//GameView.prototype._playButtonCallback = null;
+// SidePanelView.prototype._backgroundRectangle = null;
 
 //===================================================
 // Private Methods
 //===================================================
 
-GameView.prototype._init = function(){
+SidePanelView.prototype._init = function(){
 
 	this._playButton = new ButtonText(90, 45, "Play");
 	this._playButton.setPosition(670, 100);
@@ -65,37 +50,6 @@ GameView.prototype._init = function(){
 					
 	// Add the initial actor views to the gameView
 	this._addActorViewsOnGrid();
-};
-
-// Position the ActorViews in the GameView
-GameView.prototype._addActorViewsOnGrid = function(){
-			
-	var player1Actors = this._grid.getActors(GameGlobals.PLAYER1);
-	var player2Actors = this._grid.getActors(GameGlobals.PLAYER2);
-						
-	for(var i=0; i<player1Actors.length; i++){
-	
-		var tempActorView = player1Actors[i].getActorView();
-		var xPos = GameView.PLAYER1_UNIT_START_X + player1Actors[i].getPosition().col * (GameView.UNIT_X_GAP + player1Actors[i].getActorView().getWidth());
-		var yPos = GameView.PLAYER1_UNIT_START_Y + player1Actors[i].getPosition().row * (GameView.UNIT_Y_GAP + player1Actors[i].getActorView().getHeight());
-
-		tempActorView.setSelectionCallback(this._actorClicked);
-		tempActorView.setPosition(xPos, yPos);
-		
-		this.addChild(tempActorView);
-	}	
-	
-	for(i=0; i<player2Actors.length; i++){
-	
-		var tempActorView = player2Actors[i].getActorView();
-		var xPos = GameView.PLAYER2_UNIT_START_X + player2Actors[i].getPosition().col * (GameView.UNIT_X_GAP + player2Actors[i].getActorView().getWidth());
-		var yPos = GameView.PLAYER2_UNIT_START_Y + (GameGlobals.NUMBER_ROWS - 1 - player2Actors[i].getPosition().row) * (GameView.UNIT_Y_GAP + player2Actors[i].getActorView().getHeight());					
-		
-		tempActorView.setSelectionCallback(this._actorClicked);
-		tempActorView.setPosition(xPos, yPos);
-		
-		this.addChild(tempActorView);
-	}	
 };
 
 GameView.prototype._showActorToMove = function(_actors, _actorToMove, _callback){
